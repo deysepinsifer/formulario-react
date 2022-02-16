@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Button, Col, Container, Dropdown, Form, Row } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
@@ -6,6 +6,8 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import InputText from '../../Input/InputText'
 import InputSelect from '../../Input/InputSelect'
 import { Link } from "react-router-dom";
+
+
 
 const Home = () => {
   const estados = [

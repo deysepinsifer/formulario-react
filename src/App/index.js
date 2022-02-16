@@ -4,6 +4,8 @@ import {Routes, Route } from 'react-router-dom';
 import Home from "../pages/home";
 import Contatos from "../pages/contatos";
 
+
+
 const App= () => {
   return (
     <Routes>

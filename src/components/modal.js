@@ -61,18 +61,18 @@ const EdicaoModal = ({ data, ...props }) => {
                       label="Email"
                       placeholder="email@email.com"
                       type="text"
-                      value={data?.nome}
+                      value={data?.email}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <InputText label="CEP" placeholder="cep" type="text" />
+                    <InputText label="CEP" placeholder="cep" type="text" value={data?.cep}/>
                   </Col>
 
                   <Col>
                     <InputSelect
-                      label="Tipo de Logradouro"
+                      label="Tipo de Logradouro" value={data?.tipoDeLogradouro}
                       name="tipoDeLogradouro"
                       options={[
                         "Escolher...",
@@ -89,12 +89,12 @@ const EdicaoModal = ({ data, ...props }) => {
                     <InputText
                       label="Logradouro"
                       placeholder="Nome da rua"
-                      type="text"
+                      type="text" value={data?.logradouro}
                     />
                   </Col>
 
                   <Col>
-                    <InputText label="Nº" placeholder="00" type="text" />
+                    <InputText label="Nº" placeholder="00" type="text" value={data?.numero} />
                   </Col>
                 </Row>
 
@@ -103,21 +103,21 @@ const EdicaoModal = ({ data, ...props }) => {
                     <InputText
                       label="Complemento"
                       placeholder="quadra, lote..."
-                      type="text"
+                      type="text" value={data?.complemento}
                     />
                   </Col>
 
                   <Col>
-                    <InputText label="Bairro" placeholder="" type="text" />
+                    <InputText label="Bairro" placeholder="" type="text" value={data?.bairro} />
                   </Col>
 
                   <Col>
-                    <InputText label="Cidade" placeholder="" type="text" />
+                    <InputText label="Cidade" placeholder="" type="text" value={data?.cidade} />
                   </Col>
 
                   <Col>
                     <InputSelect
-                      label="Estado"
+                      label="Estado" value={data?.estado}
                       name="estado"
                       options={estados}
                     />
@@ -129,26 +129,23 @@ const EdicaoModal = ({ data, ...props }) => {
                     <InputText
                       label="Tipo de Telefone"
                       placeholder="Residencial, comercial, cel..."
-                      type="text"
+                      type="text" value={data?.tipo}
                     />
                   </Col>
 
                   <Col>
-                    <InputText label="DDD" placeholder="00" type="text" />
+                    <InputText label="DDD" placeholder="00" type="text" value={data?.ddd} />
                   </Col>
 
                   <Col>
                     <InputText
                       label="Telefone"
                       placeholder="000000000"
-                      type="text"
+                      type="text" value={data?.telefone}
                     />
                   </Col>
                 </Row>
-                <Button
-                  className="btn btn-primary enviar"
-                  onClick={() => ({})}
-                >
+                <Button className="btn btn-primary enviar" onClick={() => ({})}>
                   Enviar
                 </Button>
               </Form>
@@ -156,8 +153,10 @@ const EdicaoModal = ({ data, ...props }) => {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="secondary" onClick={props.onHide}>Close</Button>
-            <Button variant="primary">Save changes</Button>
+            <Button variant="secondary" onClick={props.onHide}>
+              Cancelar
+            </Button>
+            <Button variant="primary">Salvar</Button>
           </Modal.Footer>
         </Modal.Dialog>
       </Container>

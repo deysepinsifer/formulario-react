@@ -12,22 +12,26 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import { Link } from "react-router-dom";
 import { Style, PageTitle } from "./style";
 import EdicaoModal from "../../components/modal";
+import axios from 'axios';
+
+const apiURL = "http://localhost:3001/formulario"
 
 const Contatos = () => {
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [dataModal, setDataModal] = useState(null);
+  const [contatos, setContatos] = useState(null);
 
-  const content = [
-    {
-      id: 1,
-      nome: "Deyse",
-      email: "deysedel@gmail.com",
-      logradouro: "Rua alfredo",
-      bairro: "Jd Universal",
-      cidade: "Araraquera",
-      telefone: "(62) 928518-1841",
-    },
-  ];
+  const fetchData = async () => {
+    const response = await axios.get(apiURL)
+    setContatos(response.data) 
+  }
+
+  useEffect(()=> {
+    fetchData()
+    // fetch(apiURL)
+    //   .then((res) => res.json())
+    //   .then((data) => setContatos(data));
+  }, [])
 
   return (
     <Style>
@@ -64,15 +68,17 @@ const Contatos = () => {
             </tr>
           </thead>
           <tbody>
-            {content?.length &&
-              content.map((item) => {
+            {contatos?.length &&
+              contatos.map((item) => {
                 return (
                   <tr key={item.id}>
                     <td>{item.id}</td>
                     <td>{item.nome}</td>
                     <td>{item.email}</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
+                    <td>{item.logradouro}</td>
+                    <td>{item.bairro}</td>
+                    <td>{item.cidade}</td>
+                    <td>{item.telefone}</td>
                     <td>
                       <Button className="btn btn-seconary" onClick={()=> {
                         setModalIsOpen(!isModalOpen)

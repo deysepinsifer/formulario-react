@@ -28,9 +28,7 @@ const Contatos = () => {
 
   useEffect(()=> {
     fetchData()
-    // fetch(apiURL)
-    //   .then((res) => res.json())
-    //   .then((data) => setContatos(data));
+  
   }, [])
 
   return (
@@ -72,7 +70,6 @@ const Contatos = () => {
               contatos.map((item) => {
                 return (
                   <tr key={item.id}>
-                    <td>{item.id}</td>
                     <td>{item.nome}</td>
                     <td>{item.email}</td>
                     <td>{item.logradouro}</td>
@@ -86,7 +83,10 @@ const Contatos = () => {
                       }}>Editar</Button>
                     </td>
                     <td>
-                      <Button className="btn btn-seconary">Excluir</Button>
+                      <Button className="btn btn-seconary" onClick={()=> {
+                        setModalIsOpen(!isModalOpen)
+                        setDataModal(item)
+                      }}>Excluir</Button>
                     </td>
                   </tr>
                 );

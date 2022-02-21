@@ -145,9 +145,7 @@ const EdicaoModal = ({ data, ...props }) => {
                     />
                   </Col>
                 </Row>
-                <Button className="btn btn-primary enviar" onClick={() => ({})}>
-                  Enviar
-                </Button>
+               
               </Form>
             </p>
           </Modal.Body>
@@ -156,7 +154,7 @@ const EdicaoModal = ({ data, ...props }) => {
             <Button variant="secondary" onClick={props.onHide}>
               Cancelar
             </Button>
-            <Button variant="primary">Salvar</Button>
+            <Button variant=" btn btn-primary enviar" onClick={() => ({})}>Salvar</Button>
           </Modal.Footer>
         </Modal.Dialog>
       </Container>

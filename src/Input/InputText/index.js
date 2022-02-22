@@ -2,23 +2,18 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { Field } from "formik";
 
-const InputText = ({ name, label, placeholder, type, value }) => {
-  console.log(value);
+const InputText = (props) => {
+  
   return (
-    <Field id="nome" name={name}>
+    <Field id="nome" {...props}>
       {({
         field, // { name, value, onChange, onBlur }
         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
         meta,
       }) => (
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>{label}</Form.Label>
-          <Form.Control
-            type={type}
-            placeholder={placeholder}
-            name={name}
-            value={value}
-          />
+          <Form.Label>{props.label}</Form.Label>
+          <Form.Control {...field} {...props} />
           <Form.Text className="text-muted" />
         </Form.Group>
       )}

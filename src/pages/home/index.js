@@ -6,8 +6,7 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import InputText from "../../Input/InputText";
 import InputSelect from "../../Input/InputSelect";
 import { Link } from "react-router-dom";
-import { Formik, Form } from "formik";
-import Validacao from "../validacao";
+import { Formik, Form, useFormik } from "formik";
 
 const Home = () => {
   const estados = [
@@ -46,151 +45,223 @@ const Home = () => {
     "Alameda",
     "Avenida",
     "Vila",
-    "Fazenda"
+    "Fazenda",
   ];
+  const Validacao = () => {
+    const formik = useFormik({
+      initialValues: {
+        nome: "",
+        email: "",
+        cep: "",
+        tipoDeLogradouro: "",
+        logradouro: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        tipo: "",
+        ddd: "",
+        telefone: "",
+        mensagem: "",
+      },
 
- 
+      onSubmit: (values, { resetForm, ...props }) => {
+        alert(JSON.stringify(values, null, 2));
+      },
 
-  return (
-    <Container>
-      <Dropdown>
-        <DropdownToggle className="btn btn-secondary" id="dropdownMenuButton">
-          Menu
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem>Contato</DropdownItem>
-          <DropdownItem as={Link} to="/contatos">
-            Lista de Contato
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      <h1>CADASTRO</h1>
-      <div>
-      <Formik
-     
-        initialValues={{
-          nome: " ",
-          email: " ",
-          cep: " ",
-          tipoDeLogradouro: " ",
-          logradouro: " ",
-          numero: " ",
-          complemento: " ",
-          bairro: " ",
-          cidade: " ",
-          estado: " ",
-          tipo: " ",
-          ddd: " ",
-          telefone: " ",
-          mensagem: " ",
-        }}
-     
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-          
-        }}
-      >
-        {({ isSubmitting }) => (
-        <Form>
-          <Row>
-            <Col lg="6">
-              <InputText label="Nome" name="nome" placeholder="Digite seu nome completo"
-                type="text"></InputText>
-            </Col>
+      onReset: (values) => {
+        alert(JSON.stringify(values, null, 2));
+      },
+    });
 
-            <Col lg="6">
-              <InputText
-              label="email" name="email" placeholder="email@email.com" type="email"
-              ></InputText>
-            </Col>
-          </Row>
+    return (
+      <Container>
+        <Dropdown>
+          <DropdownToggle className="btn btn-secondary" id="dropdownMenuButton">
+            Menu
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem>Contato</DropdownItem>
+            <DropdownItem as={Link} to="/contatos">
+              Lista de Contato
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+        <h1>CADASTRO</h1>
+        <div>
+          <Form onSubmit={formik.handleSubmit}>
+            <Row>
+              <Col lg="6">
+                <InputText
+                  label="NOME"
+                  name="nome"
+                  placeholder="Nome completo"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.nome}
+                ></InputText>
+              </Col>
 
-          <Row>
-            <Col lg="2">
-            <InputText
-              label="CEP" name="cep" placeholder="00000 000" type="text"
-              ></InputText>
-            </Col>
+              <Col lg="6">
+                <InputText
+                  label="EMAIL"
+                  name="email"
+                  placeholder="email@email.com"
+                  type="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                ></InputText>
+              </Col>
+            </Row>
 
-            <Col lg="3">
-            <InputSelect
-              label="Tipo de Logradouro" name="tipoDeLogradouro" placeholder="Rua, Alameda..." type="text" options={tipoDeLogradouro}
-            ></InputSelect>
-            </Col>
+            <Row>
+              <Col lg="2">
+                <InputText
+                  label="CEP"
+                  name="cep"
+                  placeholder="00000 000"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.cep}
+                ></InputText>
+              </Col>
 
-            <Col lg="6">
-            <InputText
-              label="Logradouro" name="logradouro" placeholder="endereço completo" type="text"
-              ></InputText>
-            </Col>
+              <Col lg="3">
+                <InputSelect
+                  label="TIPO DE LOGRADOURO"
+                  name="tipoDeLogradouro"
+                  placeholder="Rua, Alameda..."
+                  type="text"
+                  options={tipoDeLogradouro}
+                  onChange={formik.handleChange}
+                  value={formik.values.tipoDeLogradouro}
+                ></InputSelect>
+              </Col>
 
-            <Col lg="1">
-            <InputText
-              label="Nº" name="numero" placeholder="00" type="text"
-              ></InputText>
-            </Col>
-          </Row>
+              <Col lg="6">
+                <InputText
+                  label="LOGRADOURO"
+                  name="logradouro"
+                  placeholder="endereço completo"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.logradouro}
+                ></InputText>
+              </Col>
 
-          <Row>
-            <Col lg="4">
-              <InputText
-                label="Complemento"
-                placeholder="quadra, lote..."
-                type="text"
-              />
-            </Col>
+              <Col lg="1">
+                <InputText
+                  label="Nº"
+                  name="numero"
+                  placeholder="00"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.numero}
+                ></InputText>
+              </Col>
+            </Row>
 
-            <Col lg="3">
-              <InputText label="Bairro" placeholder="" type="text" />
-            </Col>
+            <Row>
+              <Col lg="4">
+                <InputText
+                  label="COMPLEMENTO"
+                  name="complemento"
+                  placeholder="quadra, lote..."
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.complemento}
+                />
+              </Col>
 
-            <Col lg="3">
-              <InputText label="Cidade" placeholder="" type="text" />
-            </Col>
+              <Col lg="3">
+                <InputText
+                  label="BAIRRO"
+                  name="bairro"
+                  placeholder=""
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.bairro}
+                />
+              </Col>
 
-            <Col lg="2">
-              <InputSelect label="Estado" name="estado" options={estados} />
-            </Col>
-          </Row>
+              <Col lg="3">
+                <InputText
+                  label="CIDADE"
+                  name="cidade"
+                  placeholder=""
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.cidade}
+                />
+              </Col>
 
-          <Row>
-            <Col lg="4">
-              <InputText
-                label="Tipo de Telefone"
-                placeholder="Residencial, comercial, cel..."
-                type="text"
-              />
-            </Col>
+              <Col lg="2">
+                <InputSelect
+                  label="ESTADO"
+                  name="estado"
+                  options={estados}
+                  onChange={formik.handleChange}
+                  value={formik.values.estado}
+                />
+              </Col>
+            </Row>
 
-            <Col lg="4">
-              <InputText label="DDD" placeholder="00" type="text" />
-            </Col>
+            <Row>
+              <Col lg="4">
+                <InputText
+                  label="TIPO DE TELEFONE"
+                  name="tipo"
+                  placeholder="Residencial, comercial, cel..."
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.tipo}
+                />
+              </Col>
 
-            <Col lg="4">
-              <InputText label="Telefone" placeholder="000000000" type="text" />
-            </Col>
+              <Col lg="4">
+                <InputText
+                  label="DDD"
+                  name="ddd"
+                  placeholder="00"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.ddd}
+                />
+              </Col>
 
-            <Col lg="12">
-              <InputText
-                label="Mensagem"
-                placeholder="Informe sua solicitação"
-                type="text"
-              />
-            </Col>
-          </Row>
+              <Col lg="4">
+                <InputText
+                  label="TELEFONE"
+                  name="telefone"
+                  placeholder="000000000"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.telefone}
+                />
+              </Col>
 
-          <Button
-            className="btn btn-primary enviar"
-            type="submit"  onClick={() =>(isSubmitting)}>Enviar
-          </Button>
-        </Form>
-        )}
-      </Formik>
-      </div>
-    </Container>
-  );
+              <Col lg="12">
+                <InputText
+                  label="MENSAGEM"
+                  name="mensagem"
+                  placeholder="Informe sua solicitação"
+                  as="textarea"
+                  rows="5"
+                  onChange={formik.handleChange}
+                  value={formik.values.mensagem}
+                />
+              </Col>
+            </Row>
+
+            <Button className="btn btn-primary" type="submit">
+              Enviar
+            </Button>
+          </Form>
+        </div>
+      </Container>
+    );
+  };
 };
+
 export default Home;

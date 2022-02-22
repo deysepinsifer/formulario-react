@@ -18,3 +18,4 @@ const InputSelect = ({ label, name, options }) => {
 };
 
 export default InputSelect;
+

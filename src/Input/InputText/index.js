@@ -1,23 +1,19 @@
+import { useField } from "formik";
 import React from "react";
 import { Form } from "react-bootstrap";
-import { Field } from "formik";
+import {ErrorMessage, InputContent} from './style'
 
-const InputText = (props) => {
-  
+const InputText = ({name, label, placeholder, restProps}) => {
+  const [field, meta] = useField(name);
   return (
-    <Field id="nome" {...props}>
-      {({
-        field, // { name, value, onChange, onBlur }
-        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-        meta,
-      }) => (
+    <InputContent>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>{props.label}</Form.Label>
-          <Form.Control {...field} {...props} />
-          <Form.Text className="text-muted" />
+          <Form.Label>{label}</Form.Label>
+          <Form.Control className={meta?.touched && meta?.value === "" && "class-error"} {...field} {...restProps}  placeholder={placeholder}/>
+          <Form.Text className="text-muted"/>
+          {meta?.touched && meta?.value === "" && <ErrorMessage id="feedback">Campo obrigatório</ErrorMessage>}
         </Form.Group>
-      )}
-    </Field>
+        </InputContent>
   );
 };
 

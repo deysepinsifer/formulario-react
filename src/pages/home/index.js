@@ -14,9 +14,8 @@ const sendToBackend = async (values) => {
   console.log(response);
 };
 
-const inserir = async (values, { resetForm, ...props }) => {
+const inserir = async (values) => {
   sendToBackend(values);
-  resetForm({});
 };
 
 const Home = () => {

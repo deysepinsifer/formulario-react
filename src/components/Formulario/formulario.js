@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { withFormik } from "formik";
 import InputText from "../../Input/InputText/index"
 import InputSelect from "../../Input/InputSelect/index";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import * as Yup from "yup";
 
+const buscarCidadesDoEstado = (setCidades) => async (estado) => {
+  setCidades(["Araraquara", "São Carlos"]);
+}
+
 const FormularioComponent = ({ data, handleSubmit, ...props }) => {
+
+  const [cidades, setCidades] = useState(["Selecione uma cidade"]);
+
   const estados = [
     "Escolher",
     "AC",
@@ -44,6 +51,15 @@ const FormularioComponent = ({ data, handleSubmit, ...props }) => {
     "Avenida",
     "Vila",
     "Fazenda",
+  ];
+
+  const tipo = [
+    "Escolher",
+    "Celular",
+    "Residencial",
+    "Comercial",
+    "Recado",
+    
   ];
 
   return (
@@ -87,6 +103,7 @@ const FormularioComponent = ({ data, handleSubmit, ...props }) => {
                 name="tipoDeLogradouro"
                 value={data?.tipoDeLogradouro}
                 options={tipoDeLogradouro}
+               
               />
             </Col>
 
@@ -133,33 +150,33 @@ const FormularioComponent = ({ data, handleSubmit, ...props }) => {
             </Col>
 
             <Col>
-              <InputText
-                label="Cidade"
-                name="cidade"
-                placeholder=""
-                type="text"
-                value={data?.cidade}
-              />
-            </Col>
-
-            <Col>
               <InputSelect
                 label="Estado"
                 name="estado"
                 value={data?.estado}
                 options={estados}
+                onChange={buscarCidadesDoEstado(setCidades)}
+              />
+            </Col>
+
+            <Col>
+              <InputSelect
+                label="Cidade"
+                name="cidade"
+                value={data?.cidade}
+                options={cidades}
               />
             </Col>
           </Row>
 
           <Row>
             <Col>
-              <InputText
+              <InputSelect
                 label="Tipo de Telefone"
                 name="tipo"
-                placeholder="Residencial, comercial, cel..."
-                type="text"
+                options={tipo}
                 value={data?.tipo}
+               
               />
             </Col>
 
@@ -192,6 +209,9 @@ const FormularioComponent = ({ data, handleSubmit, ...props }) => {
                 placeholder="Digite sua mensagem"
                 type="text"
                 value={data?.mensagem}
+                
+                
+               
               />
             </Col>
           </Row>
@@ -213,32 +233,32 @@ const FormularioComponent = ({ data, handleSubmit, ...props }) => {
 };
 
 const validationSchema = Yup.object().shape({
-  nome: Yup.string().trim().required("Obrigatório!"),
-  email: Yup.string().email().trim().required("Obrigatório!"),
+  nome: Yup.string().trim().required("Nome completo é obrigatório!"),
+  email: Yup.string().email().trim().required("Email obrigatório!"),
   cep: Yup.string()
     .trim()
     .min(8, "Muito curto!")
     .max(9, "Muito Longo!")
-    .required("Obrigatório!"),
-  tipoDeLogradouro: Yup.string(),
-  logradouro: Yup.string().trim().required("Obrigatório!"),
+    .required("CEP obrigatório!"),
+  tipoDeLogradouro: Yup.string().required("Tipo de logradouro é obrigatório!"),
+  logradouro: Yup.string().trim().required("Logradouro obrigatório!"),
   numero: Yup.string().trim(),
   complemento: Yup.string().trim(),
-  bairro: Yup.string().trim().required("Obrigatório!"),
-  cidade: Yup.string().trim().required("Obrigatório!"),
-  estado: Yup.string().trim().required("Obrigatório!"),
+  bairro: Yup.string().trim().required("Bairro obrigatório!"),
+  cidade: Yup.string().trim(),
+  estado: Yup.string().trim().required("Estado obrigatório!"),
   tipo: Yup.string().trim(),
   ddd: Yup.string()
     .trim()
     .min(2, "Muito curto!")
     .max(2, "Muito longo!")
-    .required("Obrigatório"),
+    .required("DDD obrigatório!"),
   telefone: Yup.string()
     .trim()
     .min(8, "Muito curto!")
     .max(10, "Muito longo!")
-    .required("Obrigatório"),
-  mensagem: Yup.string().trim().required("Obrigatório!"),
+    .required("Telefone obrigatório!"),
+  mensagem: Yup.string().trim().required("Mensagem obrigatória!"),
 });
 
 const Formulario = withFormik({
@@ -259,12 +279,14 @@ const Formulario = withFormik({
           tipo: "",
           ddd: "",
           telefone: "",
+          mensagem: "",
         };
   },
   validationSchema: validationSchema,
-  handleSubmit: (values, { setSubmitting, props, ...rest }) => {
+  handleSubmit: (values, { setSubmitting, props, resetForm, ...rest }) => {
     debugger;
     props.handleSubmit(values);
+    resetForm({});
   },
 
   displayName: "BasicForm",
